@@ -128,3 +128,48 @@ const object3 = Object.assign({}, object1)
 const object4 = Object.create(object1);
 
 
+/*JSON.parse and JSON.stringify */
+const objectJSON = {
+    name: 'Dorelly',
+    firstname: 'Crisanto Silupú',
+    age: 33,
+    courses: {
+        web: 'Desarrollo Web',
+        js: 'JavaScript'
+    },
+
+    editAttrib(attrib, value) {
+        this[attrib] = value;
+    }
+};
+
+objectJSON.editAttrib('name', 'Rosario');
+objectJSON.courses.web = 'webbbbbb';
+
+/*convirtiendo en string un objeto */
+
+const string_ = JSON.stringify(objectJSON);
+
+console.log(string_);
+
+const convertObjectString = object => {
+    return JSON.stringify(object);
+};
+
+const objectString = convertObjectString(objectJSON);
+
+console.log(objectString);
+
+/*convirtiendo un string en un objeto */
+
+const object_ = JSON.parse(string_);
+
+console.log(object_);
+
+const convertStringObject = string => {
+    return JSON.parse(string);
+}
+
+const stringObject = convertStringObject(objectString);
+
+console.log(stringObject);
