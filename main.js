@@ -42,13 +42,55 @@ console.log(Object.entries(studentPlatzi1));
 console.log(Object.getOwnPropertyDescriptors(studentPlatzi1));
 
 /*Método estático del super prototipo Object para crear nuevas propiedades en nuestro objeto, recibe 3 parámetros: objeto, newAtributo, objeto de atributos del newAtributo*/
-Object.defineProperty(studentPlatzi1, "prueba", {
-    value: 'valor_prueba',
+Object.defineProperty(studentPlatzi1, "editorText", {
+    value: 'word',
     configurable: true,
     enumerable: true,
     writable: true
 });
 
+Object.defineProperty(studentPlatzi1, "prueba2", {
+    value: 'valor_prueba2',
+    configurable: true,
+    enumerable: false,
+    writable: false
+});
+
+Object.defineProperty(studentPlatzi1, "editor", {
+    value: 'Visual Studio Code',
+    configurable: true,
+    enumerable: true,
+    writable: false
+});
+
+Object.defineProperty(studentPlatzi1, "navigator", {
+    value: 'Chrome',
+    configurable: true,
+    enumerable: false,
+    writable: true
+});
+
+Object.defineProperty(studentPlatzi1, "terminal", {
+    value: 'bash',
+    configurable: false,
+    enumerable: true,
+    writable: true
+});
+
+console.log(studentPlatzi1);
 console.log(Object.getOwnPropertyDescriptors(studentPlatzi1));
 
+/*Eliminar una propiedad del objecto siempre y cuando la propiedad configurable no sea false*/
+
+const deleteProperty = (object, attrib) => {
+    delete object[attrib];
+};
+
+deleteProperty(studentPlatzi1, 'prueba2');
+console.log(studentPlatzi1);
+
+/*Métodos seal y freeze del super prototipo Object */
+//Object.seal(studentPlatzi1); /* coloca el atributo configurable en false para todos */
+Object.freeze(studentPlatzi1); /* coloca el atributo write y configurable en false para todos */
+console.log(studentPlatzi1);
 
