@@ -94,3 +94,37 @@ console.log(studentPlatzi1);
 Object.freeze(studentPlatzi1); /* coloca el atributo write y configurable en false para todos */
 console.log(studentPlatzi1);
 
+/*Memoria en JS:
+    al copiar un objeto de otro y le reasignas un valor cambia para ambos objetos ya que hacen referencia al pointer que se encuentra en el stack del navegador. El valor del objeto se guarda en Head del navegador. 
+*/
+
+const object1 = {
+    name: 'Dorelly',
+    firstname: 'Crisanto Silupú',
+    age: 33,
+    courses: {
+        web: 'Desarrollo Web',
+        js: 'JavaScript'
+    }
+};
+
+const object2 = {};
+
+/* copiando las propiedades del objeto 1 al objecto 2 
+   mientras dentro del object a copiar no tenga otro objecto si es válido, ya que al copiar un atributo objeto hacia otro objeto hace referencia al mismo espacio en memoria
+*/
+
+const copy = (object1, object2) => {
+    for(const attrib in object1){
+        object2[attrib] = object1[attrib];
+    }
+};
+
+copy(object1, object2);
+
+/*Copiando propiedades de un obje a otro con métodos del super prototipo Object*/
+/* el método assign tambien no es válido si hay un object dentro del objecto a copiar */
+const object3 = Object.assign({}, object1)
+const object4 = Object.create(object1);
+
+
