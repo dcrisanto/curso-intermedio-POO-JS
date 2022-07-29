@@ -242,3 +242,46 @@ const result3 = (newIndex, array) => {
 }
 
 result3(newIndex, students);
+
+/*Deep copy */
+
+const isObject = (subject) => {
+    return typeof(subject) == 'object';
+};
+
+const isArray = (subject) => {
+    return Array.isArray(subject);
+};
+
+const deepCopy = (subject) => {
+    let copySubject;
+    const subjectIsObject = isObject(subject);
+    const subjectIsArray = isArray(subject);
+    if(subjectIsArray) {
+        copySubject = [];
+    } else if(subjectIsObject) {
+        copySubject = {};
+    } else {
+        return subject;
+    }
+
+    for(key in subject){
+        const keyIsObject = isObject(subject[key]);
+
+        if(keyIsObject) {
+            copySubject[key] = deepCopy(subject[key]);
+        } else {
+            if(subjectIsArray){
+                copySubject.push(subject[key]);
+            }else {
+                copySubject[key] = subject[key];
+            }
+        }
+    }
+
+    console.log(copySubject);
+    return copySubject;
+
+}
+
+deepCopy(objectJSON);
