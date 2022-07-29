@@ -173,3 +173,72 @@ const convertStringObject = string => {
 const stringObject = convertStringObject(objectString);
 
 console.log(stringObject);
+
+/* Recursividad */
+let number = 0;
+const numberMax = 5;
+
+/*
+while(number <= numberMax) {
+    console.log(number);
+    number++;
+}*/
+
+const result = (number, numberMax) => {
+    console.log(number);
+    if(number < numberMax){
+        number++;
+        return result(number, numberMax);
+    } else {
+        return number;
+    }
+}
+
+result(number, numberMax);
+
+const numbers = [1,2,45,6,65,34,2345,665,3,6,2];
+let index = 0;
+
+/*ciclos*/
+const result1 = (index, array) => {
+    for(index; index < numbers.length; index++) {
+        let element = array[index]
+        console.log({index, element});
+    }
+}
+
+result1(index, numbers);
+
+const fruits = ['manzana', 'plátano', 'naranja', 'mandarina'];
+
+/*recursividad */
+
+const result2 = array => {
+    let fruit = array[index];
+    if(index < array.length) {
+        console.log({index, fruit})
+        index++;
+        return result2(array);
+    } else {
+        console.log({index});
+        return fruits;
+    }
+}
+
+result2(fruits);
+
+let students = ['Roxana', 'Dorelly', 'Mary'];
+let newIndex = 0;
+
+const result3 = (newIndex, array) => {
+    let element = array[newIndex];
+    if(array.length != 0){
+        console.log({newIndex, element});
+        array.shift();
+        return result3(newIndex, array);
+    } else {
+        console.log('---')
+    }
+}
+
+result3(newIndex, students);
