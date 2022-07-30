@@ -285,3 +285,32 @@ const deepCopy = (subject) => {
 }
 
 deepCopy(objectJSON);
+
+const studentBasic = {
+    name: undefined,
+    firstname: undefined,
+    email: undefined,
+    age: undefined,
+    approvedCourses: undefined,
+    learningPaths: undefined,
+    socialNetworks: {
+        twitter: undefined,
+        facebook: undefined,
+        instagran: undefined
+    }
+}
+
+const studentBasic1 = deepCopy(studentBasic);
+
+Object.defineProperty(studentBasic1, "name", {
+    value: 'Dorelly Crisanto',
+    configurable: false
+});
+
+/*método del super prototipo Object para validar si todos los atributos cuenta con el valor false de la propiedad configurable */
+const isPropertyProtectedDelete = Object.isSealed(studentBasic1);
+console.log(isPropertyProtectedDelete);
+
+/*método del super prototipo Object para validar si todos los atributos cuenta con el valor false de la propiedad configurable y writable*/
+const isPropertyProtectedWriting = Object.isFrozen(studentBasic1);
+console.log(isPropertyProtectedWriting);
