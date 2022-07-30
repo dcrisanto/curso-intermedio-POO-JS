@@ -314,3 +314,47 @@ console.log(isPropertyProtectedDelete);
 /*método del super prototipo Object para validar si todos los atributos cuenta con el valor false de la propiedad configurable y writable*/
 const isPropertyProtectedWriting = Object.isFrozen(studentBasic1);
 console.log(isPropertyProtectedWriting);
+
+/*Factory pattern y RORO */
+const requiredParam = (param) => {
+    throw new Error(`El ${param} es obligatorio`);
+};
+
+/*dándole valores por defecto a las propiedades que se reciben y al mismo parámetro ojecto un ojecto vacío para que así no muestre error cuando se invoque a la función sin el parámetro object */
+const createStudents = ({
+    name = requiredParam('name'),
+    firstname = '',
+    age,
+    email = requiredParam('email'),
+    approvedCourses = [],
+    learningPaths = [],
+    twitter = '',
+    facebook = '',
+    instagran = '',
+} = {}) => {
+    return {
+        name,
+        firstname,
+        age,
+        email,
+        approvedCourses,
+        learningPaths,
+        socialNetworks: {
+            twitter,
+            facebook,
+            instagran
+        }
+        
+    }
+};
+
+const student_1 = createStudents({
+    name: 'Dorelly',
+    firstname: 'Crisanto Silupú',
+    age: 33,
+    email: 'dorelly.crisanto@gmail.com',
+    approvedCourses: ['Curso1', 'Curso2'],
+    facebook: 'dorecharo15@hotmail.com'
+});
+
+const student_2 = createStudents({email: 'xxx'});
