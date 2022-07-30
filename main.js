@@ -332,8 +332,13 @@ const createStudents = ({
     facebook = '',
     instagran = '',
 } = {}) => {
-    return {
-        name,
+
+    /*Propiedades que no se puedan cambiar directamente desde nuestros objetos*/
+    const private = {
+        _name: name,
+    };
+    /*propiedades y m+etodos públicos */
+    const public = {
         firstname,
         age,
         email,
@@ -343,9 +348,24 @@ const createStudents = ({
             twitter,
             facebook,
             instagran
-        }
-        
-    }
+        },
+
+        readName() {
+            return private._name;
+        },
+
+        changeName(newName) {
+            private._name = newName;
+        },
+
+    };
+
+    Object.defineProperty(public, "readName", {
+        configurable: false,
+        writable: false
+    });
+
+    return public;
 };
 
 const student_1 = createStudents({
@@ -357,4 +377,4 @@ const student_1 = createStudents({
     facebook: 'dorecharo15@hotmail.com'
 });
 
-const student_2 = createStudents({email: 'xxx'});
+const student_2 = createStudents({name: 'dore', email: 'c@..'});
