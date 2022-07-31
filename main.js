@@ -350,6 +350,21 @@ const createStudents = ({
             instagran
         },
 
+        /* Al usar get y set ya no tienen las propiedades value y writable en la propiedad name, debido a que sólo es un atajo para entrar con validaciones a nuestra propiedad name */
+
+        get name() {
+            return private._name;
+        },
+
+        set name(newName) {
+            if (newName.length != 0) {
+                return private._name = newName;
+            } else {
+                console.warn('Tu nombre necesita tener al menos un carácter');
+            }
+        },
+
+        /*
         readName() {
             return private._name;
         },
@@ -357,13 +372,16 @@ const createStudents = ({
         changeName(newName) {
             private._name = newName;
         },
+        */
 
     };
 
+    /*
     Object.defineProperty(public, "readName", {
         configurable: false,
         writable: false
     });
+    */
 
     return public;
 };
@@ -378,3 +396,5 @@ const student_1 = createStudents({
 });
 
 const student_2 = createStudents({name: 'dore', email: 'c@..'});
+
+/*Getters y setters*/
