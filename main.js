@@ -494,3 +494,62 @@ const student_1 = createStudents({
 
 const student_2 = createStudents({name: 'dore', email: 'c@..'});
 
+/* Instancias of JS con instancias y prototipos */
+
+function LearningPath ({
+    name = requiredParam('name'),
+    courses = []
+}) {
+    this.name = name;
+    this.courses = courses;
+};
+
+function Student({
+    name = requiredParam('name'),
+    firstname,
+    age,
+    email = requiredParam('email'),
+    approvedCourses = [],
+    learningPaths = [],
+    facebook,
+    instagran,
+    twitter
+} = {}) {
+
+    this.name = name;
+    this.firstname = firstname;
+    this.age = age;
+    this.email = email;
+    this.approvedCourses = approvedCourses;
+    this.socialNetworks = {
+        facebook,
+        instagran,
+        twitter
+    };
+
+    if(isArray(learningPaths)){
+        this.learningPaths = [];
+        for(let learningPath of learningPaths){
+            if(learningPath instanceof LearningPath){
+                this.learningPaths.push(learningPath);
+            }
+        }
+    } else {
+        console.warn('LearningPaths debe ser un array');
+        return;
+    }
+
+};
+
+const frontendAngular = new LearningPath({
+    name: 'Frontend con Angular',
+});
+
+const studentInstance = new Student({ 
+    name: 'Dorelly',
+    email: 'dorelly.crisanto@gmail.com',
+    learningPaths: [frontendAngular, {name: 'learningImpostor'}]
+});
+
+console.log(studentInstance instanceof Student);
+
