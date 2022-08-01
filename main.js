@@ -320,6 +320,50 @@ const requiredParam = (param) => {
     throw new Error(`El ${param} es obligatorio`);
 };
 
+const createLearningPath = ({
+    name = requiredParam('name'),
+    courses = []
+} = {}) => {
+
+    const private = {
+        _name: name,
+        _courses: courses
+    };
+
+    const public = {
+
+        get name() {
+            return private._name;
+        },
+
+        set name(newName) {
+            if(newName.length != 0){
+                return private._name = newName;
+            } else {
+                console.log('El nombre de la ruta de aprendizaje debe tener al menos un carácter');
+            }
+        },
+
+        get courses() {
+            return private._courses;
+        },
+
+     };
+
+    return public;
+
+};
+
+const webDevelopmentSchool = createLearningPath({
+    name: 'Escuela de Desarrollo Web',
+    courses: ['Curso1', 'Curso2'],
+});
+
+const javaScriptSchool = createLearningPath({
+    name: 'Escuela de JavaScript',
+    courses: ['js1', 'js2']
+});
+
 /*dándole valores por defecto a las propiedades que se reciben y al mismo parámetro ojecto un ojecto vacío para que así no muestre error cuando se invoque a la función sin el parámetro object */
 const createStudents = ({
     name = requiredParam('name'),
@@ -336,6 +380,7 @@ const createStudents = ({
     /*Propiedades que no se puedan cambiar directamente desde nuestros objetos*/
     const private = {
         _name: name,
+        _learningPaths: learningPaths,
     };
     /*propiedades y m+etodos públicos */
     const public = {
@@ -343,13 +388,13 @@ const createStudents = ({
         age,
         email,
         approvedCourses,
-        learningPaths,
         socialNetworks: {
             twitter,
             facebook,
             instagran
         },
 
+        /*Getters y setters*/
         /* Al usar get y set ya no tienen las propiedades value y writable en la propiedad name, debido a que sólo es un atajo para entrar con validaciones a nuestra propiedad name */
 
         get name() {
@@ -363,6 +408,57 @@ const createStudents = ({
                 console.warn('Tu nombre necesita tener al menos un carácter');
             }
         },
+
+        get learningPaths() {
+            return private._learningPaths;
+        },
+        /*Este set será para agregar un nuevo learningPath desde la función createLearningPath
+        set learningPaths(newLearningPath) {
+            if(newLearningPath != 0) {
+                const new_learningPath = createLearningPath({
+                    name: newLearningPath,
+                });
+                return private._learningPaths.push(new_learningPath);
+            } else {
+                console.warn('El curso debe tener al menos un carácter');
+            }
+        } */
+
+        /* Este set será para enviar un nuevo learningPath desde los argumentos enviados*/
+
+        set learningPaths(newLearningPaths) {
+            if(isArray(newLearningPaths)){
+                console.warn('Los learningPaths deben ser un objeto');
+                return;
+            }
+
+            if(!isObject(newLearningPaths)){
+                console.warn('Los learningPaths deben ser un objeto');
+                return;
+            }
+
+            if(!newLearningPaths.name) {
+                console.warn('Cada learningPath debe tener un nombre');
+                return;
+            }
+
+            if(!newLearningPaths.courses){
+                console.warn('Cada learningPath debe tener la propiedad cursos');
+                return;
+            }
+
+            if(!isArray(newLearningPaths.courses)){
+                console.warn('La propiedad cursos debe ser un array');
+                return;
+            }
+
+            if(!newLearningPaths.courses.length > 0) {
+                console.warn('El array de courses debe tener elementos');
+                return;
+            }
+            
+            private._learningPaths.push(newLearningPaths);
+        }
 
         /*
         readName() {
@@ -392,9 +488,9 @@ const student_1 = createStudents({
     age: 33,
     email: 'dorelly.crisanto@gmail.com',
     approvedCourses: ['Curso1', 'Curso2'],
+    learningPaths: [webDevelopmentSchool, javaScriptSchool],
     facebook: 'dorecharo15@hotmail.com'
 });
 
 const student_2 = createStudents({name: 'dore', email: 'c@..'});
 
-/*Getters y setters*/
