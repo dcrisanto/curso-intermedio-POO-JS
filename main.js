@@ -286,6 +286,82 @@ const deepCopy = (subject) => {
 
 deepCopy(objectJSON);
 
+/* métodos estáticos en JS */
+class SuperObject {
+    //método estático para isObject
+    static isObject() {
+        return typeof(subject) == 'object';
+    };
+
+    //creando un método estático para deepCopy
+    static deepCopy(subject) {
+        let copySubject;
+        const subjectIsObject = isObject(subject);
+        const subjectIsArray = isArray(subject);
+        if(subjectIsArray) {
+            copySubject = [];
+        } else if(subjectIsObject) {
+            copySubject = {};
+        } else {
+            return subject;
+        }
+
+        for(key in subject){
+            const keyIsObject = isObject(subject[key]);
+
+            if(keyIsObject) {
+                copySubject[key] = deepCopy(subject[key]);
+            } else {
+                if(subjectIsArray){
+                    copySubject.push(subject[key]);
+                }else {
+                    copySubject[key] = subject[key];
+                }
+            }
+        }
+
+        console.log(copySubject);
+        return copySubject;
+        };
+};
+
+//métodos estáticos desde un prototipo
+function SuperObjectPrototype() {};
+//agregando al prototipo SuperObjectPrototype el método estático isArray
+SuperObjectPrototype.isArray = (subject) => {
+    return Array.isArray(subject);
+};
+//agregando al prototipo SuperObjectPrototype el método estático deepCopy
+SuperObjectPrototype.deepCopy = (subject) => {
+    let copySubject;
+    const subjectIsObject = isObject(subject);
+    const subjectIsArray = isArray(subject);
+    if(subjectIsArray) {
+        copySubject = [];
+    } else if(subjectIsObject) {
+        copySubject = {};
+    } else {
+        return subject;
+    }
+
+    for(key in subject){
+        const keyIsObject = isObject(subject[key]);
+
+        if(keyIsObject) {
+            copySubject[key] = deepCopy(subject[key]);
+        } else {
+            if(subjectIsArray){
+                copySubject.push(subject[key]);
+            }else {
+                copySubject[key] = subject[key];
+            }
+        }
+    }
+
+    console.log(copySubject);
+    return copySubject;
+}
+
 const studentBasic = {
     name: undefined,
     firstname: undefined,
