@@ -527,12 +527,31 @@ function Student({
         twitter
     };
 
+    const private = {
+        "_learningPaths": [],
+    };
+
+    /* Atributos y métodos privados en prototipos */
+
+    Object.defineProperty(this, "learningPaths", {
+    get() {
+        return private._learningPaths;
+    },
+
+    set(newLearningPath) {
+        //el newLearningPath es el que enviamos en cada iteración de learningPaths
+        if(newLearningPath instanceof LearningPath){
+            private._learningPaths.push(newLearningPath);
+        } else {
+            console.warn('Alguno de los learningPaths no es una instancia de LearningPath');
+        }
+    }
+});
+
     if(isArray(learningPaths)){
-        this.learningPaths = [];
         for(let learningPath of learningPaths){
-            if(learningPath instanceof LearningPath){
-                this.learningPaths.push(learningPath);
-            }
+        //llamando al set con this.learningPath
+           this.learningPaths = learningPath;
         }
     } else {
         console.warn('LearningPaths debe ser un array');
@@ -545,11 +564,15 @@ const frontendAngular = new LearningPath({
     name: 'Frontend con Angular',
 });
 
+const learningImpostor = {name: 'learningImpostor'};
+
 const studentInstance = new Student({ 
     name: 'Dorelly',
     email: 'dorelly.crisanto@gmail.com',
-    learningPaths: [frontendAngular, {name: 'learningImpostor'}]
+    learningPaths: [frontendAngular, learningImpostor]
 });
 
 console.log(studentInstance instanceof Student);
+
+
 
